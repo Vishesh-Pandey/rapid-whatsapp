@@ -4,6 +4,9 @@ import { useState } from "react";
 
 function App() {
   const [number, setNumber] = useState("");
+  const [previousNumber, setpreviousNumber] = useState(
+    localStorage.getItem("previousNumber")
+  );
   const [validNumber, setValidNumber] = useState(false);
 
   const handleOnChange = (event) => {
@@ -13,6 +16,12 @@ function App() {
     } else {
       setValidNumber(false);
     }
+  };
+
+  const onChat = () => {
+    console.log("Working");
+    localStorage.setItem("previousNumber", number);
+    setpreviousNumber(localStorage.getItem("previousNumber"));
   };
 
   return (
@@ -27,7 +36,7 @@ function App() {
 
       <div className="container">
         <div className="row py-5">
-          <div className="col-6 m-auto py-5 text-center bg-success rounded">
+          <div className="col-lg-6 m-auto py-5 text-center bg-success rounded">
             <input
               onChange={handleOnChange}
               value={number}
@@ -37,6 +46,7 @@ function App() {
             />
 
             <a
+              onClick={onChat}
               rel="noreferrer"
               target="_blank"
               href={`http://wa.me/${number}`}
@@ -45,6 +55,14 @@ function App() {
               }`}
             >
               <i className="bi bi-whatsapp"></i> Chat on whatsapp
+            </a>
+            <a
+              rel="noreferrer"
+              target="_blank"
+              className={`btn btn-warning ${previousNumber ? "" : "d-none"}`}
+              href={`http://wa.me/${previousNumber}`}
+            >
+              Chat {previousNumber}
             </a>
           </div>
         </div>
