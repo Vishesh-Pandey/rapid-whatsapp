@@ -3,7 +3,7 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [number, setNumber] = useState("123");
+  const [number, setNumber] = useState("");
   const [validNumber, setValidNumber] = useState(false);
 
   const handleOnChange = (event) => {
@@ -17,9 +17,17 @@ function App() {
 
   return (
     <>
+      <nav className="navbar navbar-dark bg-success shadow">
+        <div className="container-fluid">
+          <span className="navbar-brand mb-0 h1">
+            <i className="bi bi-whatsapp"></i> Rapid Whatsapp
+          </span>
+        </div>
+      </nav>
+
       <div className="container">
-        <div className="row">
-          <div className="col-6 m-auto py-5 text-center">
+        <div className="row py-5">
+          <div className="col-6 m-auto py-5 text-center bg-success rounded">
             <input
               onChange={handleOnChange}
               value={number}
@@ -36,7 +44,7 @@ function App() {
                 validNumber ? "" : "disabled"
               }`}
             >
-              Chat on whatsapp
+              <i className="bi bi-whatsapp"></i> Chat on whatsapp
             </a>
           </div>
         </div>
