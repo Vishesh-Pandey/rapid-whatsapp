@@ -25,7 +25,7 @@ function App() {
             <a
               rel="noreferrer"
               target="_blank"
-              href={`http://wa.me/91${number}`}
+              href={`http://wa.me/${number}`}
               className="btn btn-primary my-3 m-auto"
             >
               Chat on whatsapp
