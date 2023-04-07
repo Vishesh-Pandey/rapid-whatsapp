@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [countryCode, setCountryCode] = useState("91");
@@ -9,9 +8,24 @@ function App() {
     localStorage.getItem("previousNumber")
   );
   const [validNumber, setValidNumber] = useState(false);
+  const [contactHistory, setContactHistory] = useState([]);
 
   const handleCountryCode = (event) => {
     setCountryCode(event.target.value);
+  };
+
+  const saveHistory = () => {
+    let currentHistory = localStorage.getItem("history");
+
+    console.log(currentHistory);
+
+    if (currentHistory) {
+      let historyArray = JSON.parse(currentHistory);
+      historyArray.push(countryCode + number);
+      localStorage.setItem("history", `[${historyArray}]`);
+    } else {
+      localStorage.setItem("history", `[${countryCode + number}]`);
+    }
   };
 
   const handleOnChange = (event) => {
@@ -27,7 +41,15 @@ function App() {
     console.log("Working");
     localStorage.setItem("previousNumber", countryCode + number);
     setpreviousNumber(localStorage.getItem("previousNumber"));
+    saveHistory();
+    console.log(localStorage.getItem("history"));
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("history")) {
+      setContactHistory(JSON.parse(localStorage.getItem("history")));
+    }
+  }, []);
 
   return (
     <>
@@ -86,7 +108,26 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="col-lg-5 py-5 text-center bg-warning rounded"></div>
+          <div className="col-lg-6 py-5 text-center bg-warning rounded">
+            <div className="row">
+              <div className="col-6">
+                <p>History</p>
+                {contactHistory.map((element, index) => {
+                  return (
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`http://wa.me/${element}`}
+                      className="btn btn-outline-dark my-2 w-100"
+                    >
+                      <i className="bi bi-whatsapp mx-3"></i>
+                      {element}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
