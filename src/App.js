@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 function App() {
   const [countryCode, setCountryCode] = useState("91");
   const [number, setNumber] = useState("");
-  const [previousNumber, setpreviousNumber] = useState(
-    localStorage.getItem("previousNumber")
-  );
+  const [name, setName] = useState("");
   const [validNumber, setValidNumber] = useState(false);
   const [contactHistory, setContactHistory] = useState([]);
+  const [yourContacts, setYourContacts] = useState([]);
 
   const handleCountryCode = (event) => {
     setCountryCode(event.target.value);
@@ -38,16 +37,40 @@ function App() {
   };
 
   const onChat = () => {
-    console.log("Working");
-    localStorage.setItem("previousNumber", countryCode + number);
-    setpreviousNumber(localStorage.getItem("previousNumber"));
     saveHistory();
-    console.log(localStorage.getItem("history"));
+  };
+
+  const saveContact = () => {
+    // [ {name:"name1",number:723487236},...]
+    let savedContacts = localStorage.getItem("savedContacts");
+    if (savedContacts) {
+      let savedContactsArray = JSON.parse(savedContacts);
+      console.log(savedContactsArray);
+      savedContactsArray.push({
+        name: name,
+        number: countryCode + number,
+      });
+      localStorage.setItem("savedContacts", JSON.stringify(savedContactsArray));
+    } else {
+      localStorage.setItem(
+        "savedContacts",
+        JSON.stringify([
+          {
+            name: name,
+            number: countryCode + number,
+          },
+        ])
+      );
+    }
+    setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
   };
 
   useEffect(() => {
     if (localStorage.getItem("history")) {
       setContactHistory(JSON.parse(localStorage.getItem("history")));
+    }
+    if (localStorage.getItem("savedContacts")) {
+      setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
     }
   }, []);
 
@@ -72,7 +95,7 @@ function App() {
                   value={countryCode}
                   type="text"
                   className="form-control"
-                  placeholder="enter full number (12 digits )"
+                  placeholder="Country Code"
                 />
               </div>
               <div className="col-8">
@@ -82,7 +105,7 @@ function App() {
                   value={number}
                   type="text"
                   className="form-control"
-                  placeholder="enter full number (12 digits )"
+                  placeholder="Enter valid number (10 digits )"
                 />
                 <a
                   onClick={onChat}
@@ -95,16 +118,23 @@ function App() {
                 >
                   <i className="bi bi-whatsapp"></i> Chat on whatsapp
                 </a>
-                <a
-                  rel="noreferrer"
-                  target="_blank"
-                  className={`btn btn-warning w-100 ${
-                    previousNumber ? "" : "d-none"
+                <input
+                  onChange={(event) => {
+                    setName(event.target.value);
+                  }}
+                  value={name}
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter name to save contact on browser"
+                />
+                <button
+                  onClick={saveContact}
+                  className={`btn btn-primary w-100 my-3 ${
+                    validNumber && name ? "" : "disabled"
                   }`}
-                  href={`http://wa.me/${previousNumber}`}
                 >
-                  Chat {previousNumber}
-                </a>
+                  Save Contact
+                </button>
               </div>
             </div>
           </div>
@@ -115,6 +145,7 @@ function App() {
                 {contactHistory.map((element, index) => {
                   return (
                     <a
+                      key={index}
                       target="_blank"
                       rel="noreferrer"
                       href={`http://wa.me/${element}`}
@@ -123,6 +154,20 @@ function App() {
                       <i className="bi bi-whatsapp mx-3"></i>
                       {element}
                     </a>
+                  );
+                })}
+              </div>
+              <div className="col-6">
+                <p>Saved Contacts</p>
+                {yourContacts.map((element, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="contact bg-dark text-white border border-3"
+                    >
+                      <p>Name : {element.name}</p>
+                      <p>Number : {element.number}</p>
+                    </div>
                   );
                 })}
               </div>
