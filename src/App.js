@@ -86,10 +86,10 @@ function App() {
 
       <div className="container">
         <div className="row py-5">
-          <div className="col-lg-6 py-5 text-center bg-success rounded">
+          <div className="col-lg-6 py-5 text-center bg-white bg-opacity-50 rounded-start">
             <div className="row">
               <div className="col-4">
-                <p className="text-info text-sm">Country</p>
+                <p className="text-dark text-sm">Country</p>
                 <input
                   onChange={handleCountryCode}
                   value={countryCode}
@@ -99,7 +99,7 @@ function App() {
                 />
               </div>
               <div className="col-8">
-                <p className="text-info text-sm">Phone Number</p>
+                <p className="text-dark text-sm">Phone Number</p>
                 <input
                   onChange={handleOnChange}
                   value={number}
@@ -138,7 +138,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="col-lg-6 py-5 text-center bg-warning rounded">
+          <div className="col-lg-6 py-5 text-center bg-white bg-opacity-50 rounded-end">
             <div className="row">
               <div className="col-6">
                 <p>History</p>
@@ -163,10 +163,21 @@ function App() {
                   return (
                     <div
                       key={index}
-                      className="contact bg-dark text-white border border-3"
+                      className="card text-bg-dark mb-3"
+                      style={{ maxWidth: "18rem" }}
                     >
-                      <p>Name : {element.name}</p>
-                      <p>Number : {element.number}</p>
+                      <div className="card-header">{element.name}</div>
+                      <div className="card-body">
+                        <h5 className="card-title">{element.number}</h5>
+                      </div>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={`http://wa.me/${element.number}`}
+                        className="btn btn-outline-dark"
+                      >
+                        Chat
+                      </a>
                     </div>
                   );
                 })}
