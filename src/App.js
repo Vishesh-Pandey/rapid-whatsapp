@@ -15,9 +15,6 @@ function App() {
 
   const saveHistory = () => {
     let currentHistory = localStorage.getItem("history");
-
-    console.log(currentHistory);
-
     if (currentHistory) {
       let historyArray = JSON.parse(currentHistory);
       historyArray.push(countryCode + number);
@@ -25,6 +22,7 @@ function App() {
     } else {
       localStorage.setItem("history", `[${countryCode + number}]`);
     }
+    setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
 
   const handleOnChange = (event) => {
@@ -141,7 +139,18 @@ function App() {
           <div className="col-lg-6 py-5 text-center bg-white bg-opacity-50 rounded-end">
             <div className="row">
               <div className="col-6">
-                <p>History</p>
+                <h4>
+                  <span className="float-start px-3">History</span>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("history", "[]");
+                      setContactHistory([]);
+                    }}
+                    className="btn btn-outline-dark float-end"
+                  >
+                    <i className="bi bi-trash3"></i>
+                  </button>
+                </h4>
                 {contactHistory.map((element, index) => {
                   return (
                     <a
@@ -158,13 +167,23 @@ function App() {
                 })}
               </div>
               <div className="col-6">
-                <p>Saved Contacts</p>
+                <h4>
+                  <span className="float-start px-3">Your Contacts</span>
+                  <button
+                    onClick={() => {
+                      localStorage.setItem("savedContacts", "[]");
+                      setYourContacts([]);
+                    }}
+                    className="btn btn-outline-dark float-end"
+                  >
+                    <i className="bi bi-trash3"></i>
+                  </button>
+                </h4>
                 {yourContacts.map((element, index) => {
                   return (
                     <div
                       key={index}
-                      className="card text-bg-dark mb-3"
-                      style={{ maxWidth: "18rem" }}
+                      className="card text-bg-white my-2 w-100 p-2"
                     >
                       <div className="card-header">{element.name}</div>
                       <div className="card-body">
