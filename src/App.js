@@ -13,18 +13,6 @@ function App() {
     setCountryCode(event.target.value);
   };
 
-  const saveHistory = () => {
-    let currentHistory = localStorage.getItem("history");
-    if (currentHistory) {
-      let historyArray = JSON.parse(currentHistory);
-      historyArray.push(countryCode + number);
-      localStorage.setItem("history", `[${historyArray}]`);
-    } else {
-      localStorage.setItem("history", `[${countryCode + number}]`);
-    }
-    setContactHistory(JSON.parse(localStorage.getItem("history")));
-  };
-
   const handleOnChange = (event) => {
     setNumber(event.target.value);
     if (event.target.value.length === 10) {
@@ -36,6 +24,18 @@ function App() {
 
   const onChat = () => {
     saveHistory();
+  };
+
+  const saveHistory = () => {
+    let currentHistory = localStorage.getItem("history");
+    if (currentHistory) {
+      let historyArray = JSON.parse(currentHistory);
+      historyArray.push(countryCode + number);
+      localStorage.setItem("history", `[${historyArray}]`);
+    } else {
+      localStorage.setItem("history", `[${countryCode + number}]`);
+    }
+    setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
 
   const saveContact = () => {
@@ -60,6 +60,18 @@ function App() {
         ])
       );
     }
+    setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
+  };
+
+  const deleteContact = (contactName) => {
+    let allContacts = localStorage.getItem("savedContacts");
+    allContacts = JSON.parse(allContacts);
+
+    let remainingContacts = allContacts.filter((contact) => {
+      return contact.name !== contactName;
+    });
+
+    localStorage.setItem("savedContacts", JSON.stringify(remainingContacts));
     setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
   };
 
@@ -185,7 +197,17 @@ function App() {
                       key={index}
                       className="card text-bg-white my-2 w-100 p-2"
                     >
-                      <div className="card-header">{element.name}</div>
+                      <div className="card-header d-flex justify-content-between fw-bold">
+                        {element.name}
+                        <button
+                          onClick={() => {
+                            deleteContact(element.name);
+                          }}
+                          className="btn btn-sm btn-outline-danger"
+                        >
+                          <i className="bi bi-trash3"></i>
+                        </button>
+                      </div>
                       <div className="card-body">
                         <h5 className="card-title">{element.number}</h5>
                       </div>
