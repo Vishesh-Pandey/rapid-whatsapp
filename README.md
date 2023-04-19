@@ -1,70 +1,22 @@
-# Getting Started with Create React App
+# Rapid WhatsApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Rapid WhatsApp is a React-based project that simplifies the process of starting a conversation on WhatsApp without having to save a contact's number in your phone's contacts list. The project allows users to enter a phone number directly into the app, click on "chat," and then be taken directly to that person's WhatsApp chat window without the need to save their number in their phone's contacts list. Additionally, Rapid WhatsApp includes the ability to save contacts directly in your browser's local storage.
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+You can check out the live demo of Rapid WhatsApp [here](https://vishesh-pandey.github.io/rapid-whatsapp/).
 
-### `npm start`
+[![image](https://user-images.githubusercontent.com/74998585/232938597-003793ed-4a40-4b8e-a939-39b2e37c2c36.png)
+](https://vishesh-pandey.github.io/rapid-whatsapp/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Getting Started
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+To get started with Rapid WhatsApp, follow these steps:
 
-### `npm test`
+1. Clone this repository using `git clone https://github.com/Vishesh-Pandey/rapid-whatsapp.git`
+2. Install dependencies using `npm install`
+3. Run the app using `npm start`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Contributing
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you would like to contribute to Rapid WhatsApp, please feel free to fork this repository and submit a pull request. Contributions are always welcome and appreciated.
