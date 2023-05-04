@@ -8,7 +8,8 @@ function App() {
 	const [ validNumber, setValidNumber ] = useState(false);
 	const [ contactHistory, setContactHistory ] = useState([]);
 	const [ yourContacts, setYourContacts ] = useState([]);
-	const [ error, setError ] = useState(false);
+	const [ errorNumber, setErrorNumber ] = useState(false);
+	const [ errorName, setErrorName ] = useState(false);
 	const handleCountryCode = (event) => {
 		setCountryCode(event.target.value);
 	};
@@ -40,13 +41,20 @@ function App() {
 
 	const saveContact = () => {
 		// [ {name:"name1",number:723487236},...]
+		let phoneNumber = countryCode + number
 		let savedContacts = localStorage.getItem('savedContacts');
 		let savedContactsArray = savedContacts ? JSON.parse(savedContacts) : [];
 		let nameExists = savedContactsArray.some((contact) => contact.name === name);
-		if (nameExists) {
-			setError(true);
-		} else {
-			setError(false);
+		let numberExists = savedContactsArray.some((contact) => contact.number === phoneNumber);
+
+		if (nameExists ) {
+			setErrorName(true);
+
+		} else if (numberExists) {
+setErrorNumber(true);
+		}else {
+			setErrorNumber(false);
+			setErrorName(false);
 			savedContactsArray.push({
 				name: name,
 				number: countryCode + number
@@ -106,6 +114,7 @@ function App() {
 									className="form-control"
 									placeholder="Enter valid number (10 digits )"
 								/>
+								{errorNumber && <p style={{ color: 'red' }}>Error: The phone number already exists</p>}
 								<a
 									onClick={onChat}
 									rel="noreferrer"
@@ -124,7 +133,7 @@ function App() {
 									className="form-control"
 									placeholder="Enter name to save contact on browser"
 								/>
-								{error && <p style={{ color: 'red' }}>Error: The name already exists</p>}
+								{errorName && <p style={{ color: 'red' }}>Error: The name already exists</p>}
 								<button
 									onClick={saveContact}
 									className={`btn btn-success w-100 my-3 ${validNumber && name ? '' : 'disabled'}`}
