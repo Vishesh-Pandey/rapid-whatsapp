@@ -79,7 +79,8 @@ function App() {
 
 	useEffect(() => {
 		if (localStorage.getItem('history')) {
-			setContactHistory(JSON.parse(localStorage.getItem('history')));
+			console.log(JSON.parse(localStorage.getItem('history')), 'boom');
+			setContactHistory(JSON.parse(localStorage.getItem('history')).reverse());
 		}
 		if (localStorage.getItem('savedContacts')) {
 			setYourContacts(JSON.parse(localStorage.getItem('savedContacts')));
@@ -135,7 +136,7 @@ function App() {
 								/>
 								{error && (
 									<p style={{ color: 'red' }}>
-										Error: The name or numnber already exists
+										Error: The name or number already exists
 									</p>
 								)}
 								<button
