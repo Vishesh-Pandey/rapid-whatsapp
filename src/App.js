@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from './components/Navbar';
+import React, { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [countryCode, setCountryCode] = useState('91');
-  const [number, setNumber] = useState('');
-  const [name, setName] = useState('');
+  const [countryCode, setCountryCode] = useState("91");
+  const [number, setNumber] = useState("");
+  const [name, setName] = useState("");
   const [validNumber, setValidNumber] = useState(false);
   const [contactHistory, setContactHistory] = useState([]);
   const [yourContacts, setYourContacts] = useState([]);
@@ -21,7 +21,7 @@ function App() {
 
   const handleOnChange = (event) => {
     const value = event.target.value;
-    const phoneNumber = value.replace(/[^0-9]/g, '');
+    const phoneNumber = value.replace(/[^0-9]/g, "");
     setNumber(phoneNumber);
     if (validatePhoneNumber(phoneNumber)) {
       setValidNumber(true);
@@ -35,21 +35,21 @@ function App() {
   };
 
   const saveHistory = () => {
-    let currentHistory = localStorage.getItem('history');
+    let currentHistory = localStorage.getItem("history");
     if (currentHistory) {
       let historyArray = JSON.parse(currentHistory);
       historyArray.unshift(countryCode + number);
-      localStorage.setItem('history', JSON.stringify(historyArray));
+      localStorage.setItem("history", JSON.stringify(historyArray));
     } else {
-      localStorage.setItem('history', JSON.stringify([countryCode + number]));
+      localStorage.setItem("history", JSON.stringify([countryCode + number]));
     }
-    setContactHistory(JSON.parse(localStorage.getItem('history')));
+    setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
 
   const saveContact = () => {
     // [ {name:"name1",number:723487236},...]
     let phoneNumber = countryCode + number;
-    let savedContacts = localStorage.getItem('savedContacts');
+    let savedContacts = localStorage.getItem("savedContacts");
     let savedContactsArray = savedContacts ? JSON.parse(savedContacts) : [];
     let nameExists = savedContactsArray.some(
       (contact) => contact.name === name
@@ -66,7 +66,7 @@ function App() {
         name: name,
         number: countryCode + number,
       });
-      localStorage.setItem('savedContacts', JSON.stringify(savedContactsArray));
+      localStorage.setItem("savedContacts", JSON.stringify(savedContactsArray));
     }
     //check if the name is the localstorage before save it to the set
 
@@ -74,23 +74,23 @@ function App() {
   };
 
   const deleteContact = (contactName) => {
-    let allContacts = localStorage.getItem('savedContacts');
+    let allContacts = localStorage.getItem("savedContacts");
     allContacts = JSON.parse(allContacts);
 
     let remainingContacts = allContacts.filter((contact) => {
       return contact.name !== contactName;
     });
 
-    localStorage.setItem('savedContacts', JSON.stringify(remainingContacts));
-    setYourContacts(JSON.parse(localStorage.getItem('savedContacts')));
+    localStorage.setItem("savedContacts", JSON.stringify(remainingContacts));
+    setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
   };
 
   useEffect(() => {
-    if (localStorage.getItem('history')) {
-      setContactHistory(JSON.parse(localStorage.getItem('history')));
+    if (localStorage.getItem("history")) {
+      setContactHistory(JSON.parse(localStorage.getItem("history")));
     }
-    if (localStorage.getItem('savedContacts')) {
-      setYourContacts(JSON.parse(localStorage.getItem('savedContacts')));
+    if (localStorage.getItem("savedContacts")) {
+      setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
     }
   }, []);
 
@@ -127,7 +127,7 @@ function App() {
                   target='_blank'
                   href={`http://wa.me/${countryCode + number}`}
                   className={`btn btn-success my-3 m-auto w-100 ${
-                    validNumber ? '' : 'disabled'
+                    validNumber ? "" : "disabled"
                   }`}
                 >
                   <i className='bi bi-whatsapp' /> Chat on whatsapp
@@ -149,7 +149,7 @@ function App() {
                 <button
                   onClick={saveContact}
                   className={`btn btn-success w-100 my-3 ${
-                    validNumber && name ? '' : 'disabled'
+                    validNumber && name ? "" : "disabled"
                   }`}
                 >
                   Save Contact
@@ -165,7 +165,7 @@ function App() {
                   <span className='fw-border-4 fs-4'>History</span>
                   <button
                     onClick={() => {
-                      localStorage.setItem('history', '[]');
+                      localStorage.setItem("history", "[]");
                       setContactHistory([]);
                     }}
                     className='btn btn-outline-dark '
@@ -196,7 +196,7 @@ function App() {
                   <span className='fs-4 fw-bolder-3'>Contacts</span>
                   <button
                     onClick={() => {
-                      localStorage.setItem('savedContacts', '[]');
+                      localStorage.setItem("savedContacts", "[]");
                       setYourContacts([]);
                     }}
                     className='btn btn-outline-dark'
