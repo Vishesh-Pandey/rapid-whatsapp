@@ -13,9 +13,17 @@ function App() {
     setCountryCode(event.target.value);
   };
 
+  const validatePhoneNumber = (number) => {
+    const phoneRegex =
+      /^1?[-.\s]?\(?(\d{3})\)?[-.\s]?(\d{3})[-.\s]?(\d{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
+    return phoneRegex.test(number) && number.length === 10;
+  };
+
   const handleOnChange = (event) => {
-    setNumber(event.target.value);
-    if (event.target.value.length === 10) {
+    const value = event.target.value;
+    const phoneNumber = value.replace(/[^0-9]/g, "");
+    setNumber(phoneNumber);
+    if (validatePhoneNumber(phoneNumber)) {
       setValidNumber(true);
     } else {
       setValidNumber(false);
@@ -109,7 +117,7 @@ function App() {
                 <input
                   onChange={handleOnChange}
                   value={number}
-                  type="text"
+                  type="tel"
                   className="form-control"
                   placeholder="Enter valid number (10 digits )"
                 />
