@@ -166,8 +166,24 @@ function App() {
                   <span className='fw-border-4 fs-4'>History</span>
                   <button
                     onClick={() => {
-                      localStorage.setItem("history", "[]");
-                      setContactHistory([]);
+                      swal({
+                        title: "Are you sure?",
+                        text: "Are you sure that you want to delete the history?",
+                        icon: "warning",
+                        dangerMode: true,
+                      })
+                      .then(willDelete => {
+                        if (willDelete) {
+                          localStorage.setItem("history", "[]");
+                          setContactHistory([]);
+                          swal("Deleted!", "Deleted Contact History!", "success");
+                        }
+                        else{
+                          swal({
+                              title: "History is safe!"
+                          });
+                        }
+                      });
                     }}
                     className='btn btn-outline-dark '
                   >
