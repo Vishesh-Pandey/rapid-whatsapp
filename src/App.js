@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
+import swal from "sweetalert";
 
 function App() {
   const [countryCode, setCountryCode] = useState("91");
@@ -216,7 +217,27 @@ function App() {
                           {element.name}
                           <button
                             onClick={() => {
-                              deleteContact(element.name);
+                              swal({
+                                title: "Are you sure?",
+                                text: "Are you sure that you want to delete this contact?",
+                                icon: "warning",
+                                dangerMode: true,
+                              })
+                              .then(willDelete => {
+                                if (willDelete) {
+                                  deleteContact(element.name);
+                                  swal({
+                                    title: "Deleted Successfully!",
+                                    icon: "success"
+                                  });
+                                }
+                                else{
+                                  swal({
+                                    title: "Contact Not deleted."
+                                });
+                                }
+                              });
+                              
                             }}
                             className='btn btn-sm btn-outline-danger'
                           >
