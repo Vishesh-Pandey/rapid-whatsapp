@@ -197,8 +197,25 @@ function App() {
                   <span className='fs-4 fw-bolder-3'>Contacts</span>
                   <button
                     onClick={() => {
-                      localStorage.setItem("savedContacts", "[]");
-                      setYourContacts([]);
+                      swal({
+                        title: "Are you sure?",
+                        text: "Are you sure that you want to delete all the contacts?",
+                        icon: "warning",
+                        dangerMode: true,
+                      })
+                      .then(willDelete => {
+                        if (willDelete) {
+                          localStorage.setItem("savedContacts", "[]");
+                          setYourContacts([]);
+                          swal("Deleted!", "Deleted all Contacts.", "success");
+                        }
+                        else{
+                          swal({
+                            title: "Contacts are safe!"
+                          });
+                        }
+                      });
+                      
                     }}
                     className='btn btn-outline-dark'
                   >
