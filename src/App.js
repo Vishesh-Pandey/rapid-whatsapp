@@ -34,15 +34,26 @@ function App() {
   const onChat = () => {
     saveHistory();
   };
+  function now() {
+    const now = new Date();
+    const formattedString = `Contacted on: ${now.toUTCString()}`;
+    return formattedString;
+  }
 
   const saveHistory = () => {
     let currentHistory = localStorage.getItem("history");
     if (currentHistory) {
       let historyArray = JSON.parse(currentHistory);
-      historyArray.unshift(countryCode + number);
+      historyArray.unshift({
+        number: countryCode + number,
+        timedate: now(),
+      });
       localStorage.setItem("history", JSON.stringify(historyArray));
     } else {
-      localStorage.setItem("history", JSON.stringify([countryCode + number]));
+      localStorage.setItem(
+        "history",
+        JSON.stringify([{ number: countryCode + number, timedate: now() }])
+      );
     }
     setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
@@ -171,16 +182,18 @@ function App() {
                         text: "Are you sure that you want to delete the history?",
                         icon: "warning",
                         dangerMode: true,
-                      })
-                      .then(willDelete => {
+                      }).then((willDelete) => {
                         if (willDelete) {
                           localStorage.setItem("history", "[]");
                           setContactHistory([]);
-                          swal("Deleted!", "Deleted Contact History!", "success");
-                        }
-                        else{
+                          swal(
+                            "Deleted!",
+                            "Deleted Contact History!",
+                            "success"
+                          );
+                        } else {
                           swal({
-                              title: "History is safe!"
+                            title: "History is safe!",
                           });
                         }
                       });
@@ -201,8 +214,13 @@ function App() {
                         href={`http://wa.me/${element}`}
                         className='btn btn-outline-dark my-2 w-100'
                       >
-                        <i className='bi bi-whatsapp mx-3' />
-                        {element}
+                        <div>
+                          <i className='bi bi-whatsapp mx-3' />
+                          {element.number}
+                        </div>
+                        <time style={{ fontSize: "12px" }}>
+                          {element.timedate}
+                        </time>
                       </a>
                     );
                   })}
@@ -218,20 +236,17 @@ function App() {
                         text: "Are you sure that you want to delete all the contacts?",
                         icon: "warning",
                         dangerMode: true,
-                      })
-                      .then(willDelete => {
+                      }).then((willDelete) => {
                         if (willDelete) {
                           localStorage.setItem("savedContacts", "[]");
                           setYourContacts([]);
                           swal("Deleted!", "Deleted all Contacts.", "success");
-                        }
-                        else{
+                        } else {
                           swal({
-                            title: "Contacts are safe!"
+                            title: "Contacts are safe!",
                           });
                         }
                       });
-                      
                     }}
                     className='btn btn-outline-dark'
                   >
@@ -255,22 +270,19 @@ function App() {
                                 text: "Are you sure that you want to delete this contact?",
                                 icon: "warning",
                                 dangerMode: true,
-                              })
-                              .then(willDelete => {
+                              }).then((willDelete) => {
                                 if (willDelete) {
                                   deleteContact(element.name);
                                   swal({
                                     title: "Deleted Successfully!",
-                                    icon: "success"
+                                    icon: "success",
+                                  });
+                                } else {
+                                  swal({
+                                    title: "Contact Not deleted.",
                                   });
                                 }
-                                else{
-                                  swal({
-                                    title: "Contact Not deleted."
-                                });
-                                }
                               });
-                              
                             }}
                             className='btn btn-sm btn-outline-danger'
                           >
