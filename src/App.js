@@ -42,17 +42,8 @@ function App() {
 
   const saveHistory = () => {
     let currentHistory = localStorage.getItem("history");
-    console.log(
-      "🚀 ~ file: App.js:40 ~ saveHistory ~ currentHistory:",
-      currentHistory
-    );
-
     if (currentHistory) {
       let historyArray = JSON.parse(currentHistory);
-      console.log(
-        "🚀 ~ file: App.js:44 ~ saveHistory ~ historyArray:",
-        historyArray
-      );
       historyArray.unshift({
         number: countryCode + number,
         timedate: now(),
