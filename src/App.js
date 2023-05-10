@@ -35,6 +35,7 @@ function App() {
   const onChat = () => {
     saveHistory();
   };
+
   function now() {
     const now = new Date();
     const formattedString = `Contacted on: ${now.toUTCString()}`;
@@ -43,19 +44,15 @@ function App() {
 
   const saveHistory = () => {
     let currentHistory = localStorage.getItem("history");
-    if (currentHistory) {
-      let historyArray = JSON.parse(currentHistory);
-      historyArray.unshift({
-        number: countryCode + number,
-        timedate: now(),
-      });
-      localStorage.setItem("history", JSON.stringify(historyArray));
-    } else {
-      localStorage.setItem(
-        "history",
-        JSON.stringify([{ number: countryCode + number, timedate: now() }])
-      );
+    if (!currentHistory) {
+      currentHistory = []
     }
+    let historyArray = JSON.parse(currentHistory);
+    historyArray.unshift({
+      number: countryCode + number,
+      timedate: now(),
+    });
+    localStorage.setItem("history", JSON.stringify(historyArray));
     setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
 
@@ -81,9 +78,8 @@ function App() {
       });
       localStorage.setItem("savedContacts", JSON.stringify(savedContactsArray));
     }
-    //check if the name is the localstorage before save it to the set
-
     setYourContacts(savedContactsArray);
+
   };
 
   useEffect(() => {
@@ -127,9 +123,8 @@ function App() {
                   rel='noreferrer'
                   target='_blank'
                   href={`http://wa.me/${countryCode + number}`}
-                  className={`btn btn-success my-3 m-auto w-100 ${
-                    validNumber ? "" : "disabled"
-                  }`}
+                  className={`btn btn-success my-3 m-auto w-100 ${validNumber ? "" : "disabled"
+                    }`}
                 >
                   <i className='bi bi-whatsapp' /> Chat on whatsapp
                 </a>
@@ -142,19 +137,18 @@ function App() {
                   className='form-control'
                   placeholder='Enter name to save contact on browser'
                 />
+                <button
+                  onClick={saveContact}
+                  className={`btn btn-success w-100 my-3 ${validNumber && name ? "" : "disabled"
+                    }`}
+                >
+                  Save Contact
+                </button>
                 {error && (
                   <p className='text-danger'>
                     Error: The name or number already exists
                   </p>
                 )}
-                <button
-                  onClick={saveContact}
-                  className={`btn btn-success w-100 my-3 ${
-                    validNumber && name ? "" : "disabled"
-                  }`}
-                >
-                  Save Contact
-                </button>
               </div>
             </div>
           </div>

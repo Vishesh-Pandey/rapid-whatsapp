@@ -2,11 +2,11 @@ import React from "react";
 import swal from "sweetalert";
 
 const Contacts = ({ yourContacts, setYourContacts }) => {
+
   const deleteContact = (event) => {
-    console.log(event.target.value);
-    console.log(event.currentTarget.value);
     let contactName = event.currentTarget.value;
     swal({
+      showCancelButton: true,
       title: "Are you sure?",
       text: "Are you sure that you want to delete this contact?",
       icon: "warning",
@@ -24,11 +24,14 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
           "savedContacts",
           JSON.stringify(remainingContacts)
         );
+
         setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
+
         swal({
           title: "Deleted Successfully!",
           icon: "success",
         });
+
       } else {
         swal({
           title: "Contact Not deleted.",
@@ -55,6 +58,7 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
       }
     });
   };
+
   return (
     <>
       <div className='col-md-6 py-1'>
