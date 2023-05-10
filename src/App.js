@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Contacts from "./components/Contacts";
 import History from "./components/History";
-import swal from "sweetalert";
 
 function App() {
   const [countryCode, setCountryCode] = useState("91");
