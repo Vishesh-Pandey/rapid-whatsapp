@@ -2,32 +2,30 @@ import React from "react";
 import swal from "sweetalert";
 
 const History = ({ contactHistory, setContactHistory }) => {
+  const clearHistory = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete the history?",
+      icon: "warning",
+      dangerMode: true,
+      buttons: ["No", "Yes"],
+    }).then((willDelete) => {
+      if (willDelete) {
+        localStorage.setItem("history", "[]");
+        setContactHistory([]);
+        swal("Deleted!", "Deleted Contact History!", "success");
+      } else {
+        swal({
+          title: "History is safe!",
+        });
+      }
+    });
+  };
   return (
     <div className='col-md-6 py-1'>
       <div className='d-flex justify-content-between align-items-center '>
         <span className='fw-border-4 fs-4'>History</span>
-        <button
-          onClick={() => {
-            swal({
-              title: "Are you sure?",
-              text: "Are you sure that you want to delete the history?",
-              icon: "warning",
-              dangerMode: true,
-              buttons: ["No", "Yes"],
-            }).then((willDelete) => {
-              if (willDelete) {
-                localStorage.setItem("history", "[]");
-                setContactHistory([]);
-                swal("Deleted!", "Deleted Contact History!", "success");
-              } else {
-                swal({
-                  title: "History is safe!",
-                });
-              }
-            });
-          }}
-          className='btn btn-outline-dark '
-        >
+        <button onClick={clearHistory} className='btn btn-outline-dark '>
           <i className='bi bi-trash3' />
         </button>
       </div>
