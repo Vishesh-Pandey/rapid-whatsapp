@@ -2,7 +2,10 @@ import React from "react";
 import swal from "sweetalert";
 
 const Contacts = ({ yourContacts, setYourContacts }) => {
-  const deleteContact = (contactName) => {
+  const deleteContact = (event) => {
+    console.log(event.target.value);
+    console.log(event.currentTarget.value);
+    let contactName = event.currentTarget.value;
     swal({
       title: "Are you sure?",
       text: "Are you sure that you want to delete this contact?",
@@ -70,6 +73,7 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
                   {element.name}
                   <button
                     onClick={deleteContact}
+                    value={element.name}
                     className='btn btn-sm btn-outline-danger'
                   >
                     <i className='bi bi-trash3' />
