@@ -3,42 +3,61 @@ import swal from "sweetalert";
 
 const Contacts = ({ yourContacts, setYourContacts }) => {
   const deleteContact = (contactName) => {
-    let allContacts = localStorage.getItem("savedContacts");
-    allContacts = JSON.parse(allContacts);
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete this contact?",
+      icon: "warning",
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        let allContacts = localStorage.getItem("savedContacts");
+        allContacts = JSON.parse(allContacts);
 
-    let remainingContacts = allContacts.filter((contact) => {
-      return contact.name !== contactName;
+        let remainingContacts = allContacts.filter((contact) => {
+          return contact.name !== contactName;
+        });
+
+        localStorage.setItem(
+          "savedContacts",
+          JSON.stringify(remainingContacts)
+        );
+        setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
+        swal({
+          title: "Deleted Successfully!",
+          icon: "success",
+        });
+      } else {
+        swal({
+          title: "Contact Not deleted.",
+        });
+      }
     });
+  };
 
-    localStorage.setItem("savedContacts", JSON.stringify(remainingContacts));
-    setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
+  const deleteAllContacts = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete all the contacts?",
+      icon: "warning",
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        localStorage.setItem("savedContacts", "[]");
+        setYourContacts([]);
+        swal("Deleted!", "Deleted all Contacts.", "success");
+      } else {
+        swal({
+          title: "Contacts are safe!",
+        });
+      }
+    });
   };
   return (
     <>
       <div className='col-md-6 py-1'>
         <div className='d-flex justify-content-between align-items-center'>
           <span className='fs-4 fw-bolder-3'>Contacts</span>
-          <button
-            onClick={() => {
-              swal({
-                title: "Are you sure?",
-                text: "Are you sure that you want to delete all the contacts?",
-                icon: "warning",
-                dangerMode: true,
-              }).then((willDelete) => {
-                if (willDelete) {
-                  localStorage.setItem("savedContacts", "[]");
-                  setYourContacts([]);
-                  swal("Deleted!", "Deleted all Contacts.", "success");
-                } else {
-                  swal({
-                    title: "Contacts are safe!",
-                  });
-                }
-              });
-            }}
-            className='btn btn-outline-dark'
-          >
+          <button onClick={deleteAllContacts} className='btn btn-outline-dark'>
             <i className='bi bi-trash3' />
           </button>
         </div>
@@ -50,26 +69,7 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
                 <div className='card-header d-flex justify-content-between fw-bold'>
                   {element.name}
                   <button
-                    onClick={() => {
-                      swal({
-                        title: "Are you sure?",
-                        text: "Are you sure that you want to delete this contact?",
-                        icon: "warning",
-                        dangerMode: true,
-                      }).then((willDelete) => {
-                        if (willDelete) {
-                          deleteContact(element.name);
-                          swal({
-                            title: "Deleted Successfully!",
-                            icon: "success",
-                          });
-                        } else {
-                          swal({
-                            title: "Contact Not deleted.",
-                          });
-                        }
-                      });
-                    }}
+                    onClick={deleteContact}
                     className='btn btn-sm btn-outline-danger'
                   >
                     <i className='bi bi-trash3' />
