@@ -2,7 +2,6 @@ import React from "react";
 import swal from "sweetalert";
 
 const Contacts = ({ yourContacts, setYourContacts }) => {
-
   const deleteContact = (event) => {
     let contactName = event.currentTarget.value;
     swal({
@@ -11,6 +10,7 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
       text: "Are you sure that you want to delete this contact?",
       icon: "warning",
       dangerMode: true,
+      buttons: ["No", "Yes"],
     }).then((willDelete) => {
       if (willDelete) {
         let allContacts = localStorage.getItem("savedContacts");
@@ -31,7 +31,6 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
           title: "Deleted Successfully!",
           icon: "success",
         });
-
       } else {
         swal({
           title: "Contact Not deleted.",
@@ -46,6 +45,7 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
       text: "Are you sure that you want to delete all the contacts?",
       icon: "warning",
       dangerMode: true,
+      buttons: ["No", "Yes"],
     }).then((willDelete) => {
       if (willDelete) {
         localStorage.setItem("savedContacts", "[]");
