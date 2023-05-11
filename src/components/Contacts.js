@@ -5,7 +5,6 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
   const deleteContact = (event) => {
     let contactName = event.currentTarget.value;
     swal({
-      showCancelButton: true,
       title: "Are you sure?",
       text: "Are you sure that you want to delete this contact?",
       icon: "warning",
