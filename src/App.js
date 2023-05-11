@@ -22,20 +22,23 @@ function App() {
       <Navbar />
       <div className='container'>
         <div className='row py-5 my-5 text-center bg-white bg-opacity-50 rounded'>
-          <div className='col-lg-6 py-3'>
-            <div className='row'>
-              <MainForm
-                setContactHistory={setContactHistory}
-                setYourContacts={setYourContacts}
-              />
-              <History
-                contactHistory={contactHistory}
-                setContactHistory={setContactHistory}
-              />
-              <Contacts
-                yourContacts={yourContacts}
-                setYourContacts={setYourContacts}
-              />
+
+          <div className='row'>
+            <MainForm
+              setContactHistory={setContactHistory}
+              setYourContacts={setYourContacts}
+            />
+            <div className='col-lg-6 py-3'>
+              <div className="row">
+                <History
+                  contactHistory={contactHistory}
+                  setContactHistory={setContactHistory}
+                />
+                <Contacts
+                  yourContacts={yourContacts}
+                  setYourContacts={setYourContacts}
+                />
+              </div>
             </div>
           </div>
         </div>
