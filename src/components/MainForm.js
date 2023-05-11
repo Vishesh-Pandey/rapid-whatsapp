@@ -75,7 +75,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
   };
 
   return (
-    <div className='col-lg-6 py-3 '>
+    <div className='col-lg-6 py-3'>
       <div className='row'>
         <div className='col-sm-4'>
           <p className='text-dark text-sm'>Country</p>
@@ -101,9 +101,8 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
             rel='noreferrer'
             target='_blank'
             href={`http://wa.me/${countryCode + number}`}
-            className={`btn btn-success my-3 m-auto w-100 ${
-              validNumber ? "" : "disabled"
-            }`}
+            className={`btn btn-success my-3 m-auto w-100 ${validNumber ? "" : "disabled"
+              }`}
           >
             <i className='bi bi-whatsapp' /> Chat on whatsapp
           </a>
@@ -118,9 +117,8 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
           />
           <button
             onClick={saveContact}
-            className={`btn btn-success w-100 my-3 ${
-              validNumber && name ? "" : "disabled"
-            }`}
+            className={`btn btn-success w-100 my-3 ${validNumber && name ? "" : "disabled"
+              }`}
           >
             Save Contact
           </button>
