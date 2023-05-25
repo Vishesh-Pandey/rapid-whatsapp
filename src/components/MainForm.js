@@ -21,11 +21,14 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
   }
 
   const saveHistory = () => {
+    let historyArray;
     let currentHistory = localStorage.getItem("history");
     if (!currentHistory) {
-      currentHistory = [];
+      historyArray = [];
     }
-    let historyArray = JSON.parse(currentHistory);
+    else{
+      historyArray = JSON.parse(currentHistory);
+    }
     historyArray.unshift({
       number: countryCode + number,
       timedate: now(),
