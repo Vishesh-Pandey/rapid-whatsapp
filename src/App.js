@@ -15,7 +15,7 @@ function App() {
     if (localStorage.getItem("savedContacts")) {
       setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
     }
-  }, []);
+  }, [contactHistory]);
 
   return (
     <React.Fragment>

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import swal from "sweetalert";
 
 const Contacts = ({ yourContacts, setYourContacts }) => {
+  const [countryCode] = useState("91");
+
   const deleteContact = (event) => {
     let contactName = event.currentTarget.value;
     swal({
@@ -58,6 +60,28 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
     });
   };
 
+  function now() {
+    const now = new Date();
+    const formattedString = `Contacted on: ${now.toUTCString()}`;
+    return formattedString;
+  }
+  const saveHistory = (event) => {
+    let historyArray;
+    let currentHistory = localStorage.getItem("history");
+    if (!currentHistory) {
+      historyArray = [];
+    }
+    else{
+      historyArray = JSON.parse(currentHistory);
+    }
+    console.log(event)
+    historyArray.unshift({
+      number: countryCode + event.number,
+      timedate: now(),
+    });
+    localStorage.setItem("history", JSON.stringify(historyArray));
+  };
+
   return (
     <div className='col-md-6 py-1'>
       <div className='d-flex justify-content-between align-items-center'>
@@ -85,6 +109,8 @@ const Contacts = ({ yourContacts, setYourContacts }) => {
                 <h5 className='card-title'>{element.number}</h5>
               </div>
               <a
+                onClick={e => saveHistory(element)}
+                value={element}
                 target='_blank'
                 rel='noreferrer'
                 href={`http://wa.me/${element.number}`}
