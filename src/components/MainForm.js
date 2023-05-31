@@ -1,17 +1,15 @@
 import React, { useState } from "react";
+import { saveHistory } from "../utils/contactUtils";
 
 const MainForm = ({ setContactHistory, setYourContacts }) => {
-  const [name, setName] = useState("");
-  const [validNumber, setValidNumber] = useState(false);
-  const [error, setError] = useState(false);
-  const [number, setNumber] = useState("");
   const [countryCode, setCountryCode] = useState("91");
+  const [number, setNumber] = useState("");
+  const [validNumber, setValidNumber] = useState(false);
+  const [name, setName] = useState("");
+  const [error, setError] = useState(false);
 
   const handleCountryCode = (event) => {
     setCountryCode(event.target.value);
-  };
-  const onChat = () => {
-    saveHistory();
   };
 
   function now() {
@@ -19,23 +17,6 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
     const formattedString = `Contacted on: ${now.toUTCString()}`;
     return formattedString;
   }
-
-  const saveHistory = () => {
-    let historyArray;
-    let currentHistory = localStorage.getItem("history");
-    if (!currentHistory) {
-      historyArray = [];
-    }
-    else{
-      historyArray = JSON.parse(currentHistory);
-    }
-    historyArray.unshift({
-      number: countryCode + number,
-      timedate: now(),
-    });
-    localStorage.setItem("history", JSON.stringify(historyArray));
-    setContactHistory(JSON.parse(localStorage.getItem("history")));
-  };
 
   const validatePhoneNumber = (number) => {
     const phoneRegex =
@@ -78,55 +59,60 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
   };
 
   return (
-    <div className='col-lg-6 py-3'>
-      <div className='row'>
-        <div className='col-sm-4'>
-          <p className='text-dark text-sm'>Country</p>
+    <div className="col-lg-6 py-3">
+      <div className="row">
+        <div className="col-sm-4">
+          <p className="text-dark text-sm">Country</p>
           <input
             onChange={handleCountryCode}
             value={countryCode}
-            type='text'
-            className='form-control'
-            placeholder='Country Code'
+            type="text"
+            className="form-control"
+            placeholder="Country Code"
           />
         </div>
-        <div className='col-sm-8'>
-          <p className='text-dark text-sm'>Phone Number</p>
+        <div className="col-sm-8">
+          <p className="text-dark text-sm">Phone Number</p>
           <input
             onChange={handleOnChange}
             value={number}
-            type='tel'
-            className='form-control'
-            placeholder='Enter valid number (10 digits )'
+            type="tel"
+            className="form-control"
+            placeholder="Enter valid number (10 digits )"
           />
           <a
-            onClick={onChat}
-            rel='noreferrer'
-            target='_blank'
+            onClick={() => {
+              saveHistory(countryCode + number, now());
+              setContactHistory(JSON.parse(localStorage.getItem("history")));
+            }}
+            rel="noreferrer"
+            target="_blank"
             href={`http://wa.me/${countryCode + number}`}
-            className={`btn btn-success my-3 m-auto w-100 ${validNumber ? "" : "disabled"
-              }`}
+            className={`btn btn-success my-3 m-auto w-100 ${
+              validNumber ? "" : "disabled"
+            }`}
           >
-            <i className='bi bi-whatsapp' /> Chat on whatsapp
+            <i className="bi bi-whatsapp" /> Chat on whatsapp
           </a>
           <input
             onChange={(event) => {
               setName(event.target.value);
             }}
             value={name}
-            type='text'
-            className='form-control'
-            placeholder='Enter name to save contact on browser'
+            type="text"
+            className="form-control"
+            placeholder="Enter name to save contact on browser"
           />
           <button
             onClick={saveContact}
-            className={`btn btn-success w-100 my-3 ${validNumber && name ? "" : "disabled"
-              }`}
+            className={`btn btn-success w-100 my-3 ${
+              validNumber && name ? "" : "disabled"
+            }`}
           >
             Save Contact
           </button>
           {error && (
-            <p className='text-danger'>
+            <p className="text-danger">
               Error: The name or number already exists
             </p>
           )}

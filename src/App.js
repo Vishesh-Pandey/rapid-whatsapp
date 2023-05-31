@@ -15,18 +15,18 @@ function App() {
     if (localStorage.getItem("savedContacts")) {
       setYourContacts(JSON.parse(localStorage.getItem("savedContacts")));
     }
-  }, [contactHistory]);
+  }, []);
 
   return (
     <React.Fragment>
       <Navbar />
-      <div className='container'>
-        <div className='row py-5 my-5 text-center bg-white bg-opacity-50 rounded'>
+      <div className="container">
+        <div className="row py-5 my-5 text-center bg-white bg-opacity-50 rounded">
           <MainForm
             setContactHistory={setContactHistory}
             setYourContacts={setYourContacts}
           />
-          <div className='col-lg-6 py-3'>
+          <div className="col-lg-6 py-3">
             <div className="row">
               <History
                 contactHistory={contactHistory}
@@ -35,6 +35,7 @@ function App() {
               <Contacts
                 yourContacts={yourContacts}
                 setYourContacts={setYourContacts}
+                setContactHistory={setContactHistory}
               />
             </div>
           </div>
