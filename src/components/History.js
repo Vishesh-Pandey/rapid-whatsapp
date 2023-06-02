@@ -3,6 +3,9 @@ import swal from "sweetalert";
 
 const History = ({ contactHistory, setContactHistory }) => {
   const [showAllHistory, setShowAllHistory] = useState(false);
+  let limitedContactHistory = contactHistory;
+  let loadMoreButton = null;
+
   const clearHistory = () => {
     swal({
       title: "Are you sure?",
@@ -31,20 +34,15 @@ const History = ({ contactHistory, setContactHistory }) => {
     setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
 
-  const handleLoadMore = () => {
-    setShowAllHistory(true);
-  };
-
-  let limitedContactHistory = contactHistory;
-  let loadMoreButton = null;
-
   if (!showAllHistory) {
-    limitedContactHistory = contactHistory.slice(0, 10);
+    limitedContactHistory = contactHistory.slice(0, 5);
 
-    if (contactHistory.length > 10) {
+    if (contactHistory.length > 5) {
       loadMoreButton = (
         <button
-          onClick={handleLoadMore}
+          onClick={() => {
+            setShowAllHistory(true);
+          }}
           className="btn btn-success w-100 my-3"
         >
           Load More
