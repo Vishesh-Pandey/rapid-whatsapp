@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import swal from "sweetalert";
 
 const History = ({ contactHistory, setContactHistory }) => {
+  const [showAllHistory, setShowAllHistory] = useState(false);
   const clearHistory = () => {
     swal({
       title: "Are you sure?",
@@ -30,6 +31,28 @@ const History = ({ contactHistory, setContactHistory }) => {
     setContactHistory(JSON.parse(localStorage.getItem("history")));
   };
 
+  const handleLoadMore = () => {
+    setShowAllHistory(true);
+  };
+
+  let limitedContactHistory = contactHistory;
+  let loadMoreButton = null;
+
+  if (!showAllHistory) {
+    limitedContactHistory = contactHistory.slice(0, 10);
+
+    if (contactHistory.length > 10) {
+      loadMoreButton = (
+        <button
+          onClick={handleLoadMore}
+          className="btn btn-success w-100 my-3"
+        >
+          Load More
+        </button>
+      );
+    }
+  }
+
   return (
     <div className="col-md-6 py-1">
       <div className="d-flex justify-content-between align-items-center ">
@@ -43,7 +66,7 @@ const History = ({ contactHistory, setContactHistory }) => {
       </div>
 
       <div>
-        {contactHistory.map((element, index) => {
+        {limitedContactHistory.map((element, index) => {
           return (
             <div key={index} className="btn btn-outline-dark w-100 my-2">
               <div>
@@ -72,6 +95,7 @@ const History = ({ contactHistory, setContactHistory }) => {
             </div>
           );
         })}
+        {loadMoreButton}
       </div>
     </div>
   );
