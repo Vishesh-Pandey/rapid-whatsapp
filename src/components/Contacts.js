@@ -75,7 +75,7 @@ const Contacts = ({ yourContacts, setYourContacts, setContactHistory }) => {
       </div>
 
       <div>
-        {yourContacts.map((element, index) => {
+        {yourContacts.sort((a,b)=>a.name.localeCompare(b.name)).map((element, index) => {
           return (
             <div key={index} className="card text-bg-white my-2 w-100 p-2">
               <div className="card-header d-flex justify-content-between fw-bold">
