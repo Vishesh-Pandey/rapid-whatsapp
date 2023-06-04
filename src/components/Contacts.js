@@ -65,6 +65,13 @@ const Contacts = ({ yourContacts, setYourContacts, setContactHistory }) => {
     return formattedString;
   }
 
+  function handleCopyToClipboard(value) {
+    navigator?.clipboard
+      .writeText(value)
+      .then((val) => swal("Copied!", value, "success"))
+      .catch((err) => swal("Oops!", "something went wrong", "error"));
+  }
+
   return (
     <div className="col-md-6 py-1">
       <div className="d-flex justify-content-between align-items-center">
@@ -75,40 +82,49 @@ const Contacts = ({ yourContacts, setYourContacts, setContactHistory }) => {
       </div>
 
       <div>
-        {yourContacts.sort((a,b)=>a.name.localeCompare(b.name)).map((element, index) => {
-          return (
-            <div key={index} className="card text-bg-white my-2 w-100 p-2">
-              <div className="card-header d-flex justify-content-between fw-bold">
-                {element.name}
-                <button
-                  onClick={deleteContact}
-                  value={element.name}
-                  className="btn btn-sm btn-outline-danger"
+        {yourContacts
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((element, index) => {
+            return (
+              <div key={index} className="card text-bg-white my-2 w-100 p-2">
+                <div className="card-header d-flex justify-content-between fw-bold">
+                  <p className="flex-grow-1 m-auto">{element.name}</p>
+                  <button
+                    onClick={() => handleCopyToClipboard(element?.number)}
+                    value={element.name}
+                    className="btn btn-sm btn-outline-dark m-1"
+                  >
+                    <i className="bi bi-clipboard" />
+                  </button>
+                  <button
+                    onClick={deleteContact}
+                    value={element.name}
+                    className="btn btn-sm btn-outline-danger m-1"
+                  >
+                    <i className="bi bi-trash3" />
+                  </button>
+                </div>
+                <div className="card-body">
+                  <h5 className="card-title">{element.number}</h5>
+                </div>
+                <a
+                  onClick={(e) => {
+                    saveHistory(element.number, now());
+                    setContactHistory(
+                      JSON.parse(localStorage.getItem("history"))
+                    );
+                  }}
+                  value={element}
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`http://wa.me/${element.number}`}
+                  className="btn btn-outline-dark"
                 >
-                  <i className="bi bi-trash3" />
-                </button>
+                  Chat
+                </a>
               </div>
-              <div className="card-body">
-                <h5 className="card-title">{element.number}</h5>
-              </div>
-              <a
-                onClick={(e) => {
-                  saveHistory(element.number, now());
-                  setContactHistory(
-                    JSON.parse(localStorage.getItem("history"))
-                  );
-                }}
-                value={element}
-                target="_blank"
-                rel="noreferrer"
-                href={`http://wa.me/${element.number}`}
-                className="btn btn-outline-dark"
-              >
-                Chat
-              </a>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );
