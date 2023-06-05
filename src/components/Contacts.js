@@ -88,14 +88,7 @@ const Contacts = ({ yourContacts, setYourContacts, setContactHistory }) => {
             return (
               <div key={index} className="card text-bg-white my-2 w-100 p-2">
                 <div className="card-header d-flex justify-content-between fw-bold">
-                  <p className="flex-grow-1 m-auto">{element.name}</p>
-                  <button
-                    onClick={() => handleCopyToClipboard(element?.number)}
-                    value={element.name}
-                    className="btn btn-sm btn-outline-dark m-1"
-                  >
-                    <i className="bi bi-clipboard" />
-                  </button>
+                  <p>{element.name}</p>
                   <button
                     onClick={deleteContact}
                     value={element.name}
@@ -105,7 +98,18 @@ const Contacts = ({ yourContacts, setYourContacts, setContactHistory }) => {
                   </button>
                 </div>
                 <div className="card-body">
-                  <h5 className="card-title">{element.number}</h5>
+                  <div className="d-flex justify-content-between align-items-center">
+                    <h5 className="card-title">
+                      {element.number.slice(0, 2)}-{element.number.slice(2, 12)}
+                    </h5>
+                    <button
+                      onClick={() => handleCopyToClipboard(element?.number)}
+                      value={element.name}
+                      className="btn btn-sm btn-outline-secondary m-1"
+                    >
+                      <i className="bi bi-clipboard" />
+                    </button>
+                  </div>
                 </div>
                 <a
                   onClick={(e) => {
@@ -118,7 +122,7 @@ const Contacts = ({ yourContacts, setYourContacts, setContactHistory }) => {
                   target="_blank"
                   rel="noreferrer"
                   href={`http://wa.me/${element.number}`}
-                  className="btn btn-outline-dark"
+                  className="btn btn-outline-success"
                 >
                   Chat
                 </a>
