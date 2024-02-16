@@ -75,7 +75,7 @@ const History = ({ contactHistory, setContactHistory }) => {
                   className="btn btn-outline-success btn-sm border-0 w-75"
                 >
                   <i className="bi bi-whatsapp mx-3" />
-                  <span>{element.number}</span>
+                  <span>{element.name?element.name:element.number}</span>
                 </a>
 
                 <button

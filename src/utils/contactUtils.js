@@ -18,7 +18,8 @@ export const saveHistory = (number, timedate) => {
    }
 
   historyArray.unshift({
-    number: name? name: number ,
+    name:name,
+    number: number ,
     timedate: timedate,
   });
   localStorage.setItem("history", JSON.stringify(historyArray));

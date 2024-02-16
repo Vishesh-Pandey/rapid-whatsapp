@@ -54,8 +54,21 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
         number: countryCode + number,
       });
       localStorage.setItem("savedContacts", JSON.stringify(savedContactsArray));
+      
+      const historyArray=JSON.parse(localStorage.getItem("history"))
+         for(let i=0;i<historyArray.length;i++){
+             let number=historyArray[i].number;
+           const found=  savedContactsArray.find((contact)=>contact.number===number)
+           if(found){
+             historyArray[i].name=found.name;
+           }
+         }
+      localStorage.setItem("history", JSON.stringify(historyArray));
+      setContactHistory(JSON.parse(localStorage.getItem("history")));
+
     }
     setYourContacts(savedContactsArray);
+
   };
 
   return (
@@ -82,7 +95,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
           />
           <a
             onClick={() => {
-              saveHistory(countryCode + number, now());
+              saveHistory(countryCode + number, now());     
               setContactHistory(JSON.parse(localStorage.getItem("history")));
             }}
             rel="noreferrer"
