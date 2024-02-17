@@ -7,6 +7,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
   const [validNumber, setValidNumber] = useState(false);
   const [name, setName] = useState("");
   const [error, setError] = useState(false);
+  const [qrLink, setQrLink] = useState("");
 
   const handleCountryCode = (event) => {
     setCountryCode(event.target.value);
@@ -29,8 +30,12 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
     setNumber(phoneNumber);
     if (validatePhoneNumber(phoneNumber)) {
       setValidNumber(true);
+      setQrLink(
+        `https://api.whatsapp.com/send/?phone=${phoneNumber}8&text&type=phone_number&app_absent=0`
+      );
     } else {
       setValidNumber(false);
+      setQrLink("");
     }
   };
   const saveContact = () => {
@@ -54,35 +59,52 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
         number: countryCode + number,
       });
       localStorage.setItem("savedContacts", JSON.stringify(savedContactsArray));
-      
-      const historyArray=JSON.parse(localStorage.getItem("history"))
-         for(let i=0;i<historyArray.length;i++){
-             let number=historyArray[i].number;
-           const found=  savedContactsArray.find((contact)=>contact.number===number)
-           if(found){
-             historyArray[i].name=found.name;
-           }
-         }
+
+      const historyArray = JSON.parse(localStorage.getItem("history"));
+      for (let i = 0; i < historyArray.length; i++) {
+        let number = historyArray[i].number;
+        const found = savedContactsArray.find(
+          (contact) => contact.number === number
+        );
+        if (found) {
+          historyArray[i].name = found.name;
+        }
+      }
       localStorage.setItem("history", JSON.stringify(historyArray));
       setContactHistory(JSON.parse(localStorage.getItem("history")));
-
     }
     setYourContacts(savedContactsArray);
-
   };
 
   return (
     <div className="col-lg-6 py-3">
       <div className="row">
         <div className="col-sm-4">
-          <p className="text-dark text-sm">Country</p>
-          <input
-            onChange={handleCountryCode}
-            value={countryCode}
-            type="text"
-            className="form-control"
-            placeholder="Country Code"
-          />
+          <div className="row">
+            <div className="col-12">
+              <p className="text-dark text-sm">Country</p>
+              <input
+                onChange={handleCountryCode}
+                value={countryCode}
+                type="text"
+                className="form-control"
+                placeholder="Country Code"
+              />
+            </div>
+            <div className="col-12 d-sm-block d-none">
+              {validNumber ? (
+                <img
+                  className="w-75 p-1 rounded"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?data=${qrLink}&size=720x720`}
+                  alt="Loading QR"
+                />
+              ) : (
+                <p className="p-2">
+                  Enter valid number to get QR ( Scan and Chat )
+                </p>
+              )}
+            </div>
+          </div>
         </div>
         <div className="col-sm-8">
           <p className="text-dark text-sm">Phone Number</p>
@@ -95,7 +117,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
           />
           <a
             onClick={() => {
-              saveHistory(countryCode + number, now());     
+              saveHistory(countryCode + number, now());
               setContactHistory(JSON.parse(localStorage.getItem("history")));
             }}
             rel="noreferrer"
