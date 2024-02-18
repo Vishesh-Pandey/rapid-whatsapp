@@ -31,7 +31,7 @@ const MainForm = ({ setContactHistory, setYourContacts }) => {
     if (validatePhoneNumber(phoneNumber)) {
       setValidNumber(true);
       setQrLink(
-        `https://api.whatsapp.com/send/?phone=${phoneNumber}8&text&type=phone_number&app_absent=0`
+        `https://api.whatsapp.com/send/?phone=${countryCode}${phoneNumber}&text&type=phone_number&app_absent=0`
       );
     } else {
       setValidNumber(false);
